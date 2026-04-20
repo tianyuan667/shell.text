@@ -42,3 +42,12 @@ if [ -w ./text.sh ]
 else 
 	echo "当前用户text.sh没有写权限"
 fi
+#5.写一个脚本，询问用户的年龄和姓名。如果用户年满18岁，且其姓名为“管理员”，请打印“已授予访问权限”。否则，打印“拒绝访问”
+read -p "输入用户名：" Admin
+read -p "输入年龄：" Age
+if [ $Admin = "root" ] && [ $Age -ge 18 ] 
+	then 
+		echo "已授予访问权限"
+else 
+	echo "拒绝访问"
+fi
