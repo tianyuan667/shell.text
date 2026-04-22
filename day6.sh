@@ -51,13 +51,14 @@ is_prime() {
         return 1
     fi
     
-    # 检查从 3 到 sqrt(num) 的奇数
-    local max=$((num**0.5))
-    for (( i=3; i<=max; i+=2 )); do
-        if [ $((num % i)) -eq 0 ]; then
-            return 1  # 能被整除，不是质数
-        fi
-    done
+ # 检查从 3 到 sqrt(num) 的奇数
+# 使用 bc 命令计算平方根并取整
+local max=$(echo "sqrt($num)" | bc)
+for (( i=3; i<=max; i+=2 )); do
+    if [ $((num % i)) -eq 0 ]; then
+        return 1  # 能被整除，不是质数
+    fi
+done
     
     return 0  # 是质数
 }
