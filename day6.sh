@@ -143,9 +143,9 @@ echo "=== 测试练习 1: 反转字符串 ==="
 # 调用 reverse_string 函数反转字符串 "Hello, World!"
 result=$(reverse_string "Hello, World!")
 # 输出原始字符串
- echo "原始字符串: Hello, World!"
+echo "原始字符串: Hello, World!"
 # 输出反转后的字符串
- echo "反转后: $result"
+echo "反转后: $result"
 echo
 
 # 测试练习 2: 计算阶乘
@@ -155,13 +155,13 @@ factorial 5
 # 获取函数返回值
 result=$?
 # 输出计算结果
- echo "5 的阶乘: $result"
+echo "5 的阶乘: $result"
 echo
 
 # 测试练习 3: 查找 1-100 之间的质数
 echo "=== 测试练习 3: 1-100 之间的质数 ==="
 # 输出提示信息
- echo "1-100 之间的质数："
+echo "1-100 之间的质数："
 
 # 遍历 1 到 100 的每个数字
 for (( i=1; i<=100; i++ )); do
@@ -174,13 +174,14 @@ for (( i=1; i<=100; i++ )); do
     fi
 done
 # 输出换行
- echo
+echo
+
 echo
 
 # 测试练习 4: 分析文件
 echo "=== 测试练习 4: 分析文件 ==="
 # 输出提示信息
- echo "分析当前目录下的文件："
+echo "分析当前目录下的文件："
 # 调用 analyze_file 函数分析 day6_exercises.sh 文件
 analyze_file "day6_exercises.sh"
 # 调用 analyze_file 函数分析 hello_world.sh 文件
@@ -190,7 +191,7 @@ echo
 # 测试练习 5: 生成随机密码
 echo "=== 测试练习 5: 生成随机密码 ==="
 # 调用 generate_password 函数生成 12 位随机密码
- echo "生成 12 位随机密码: $(generate_password 12)"
+echo "生成 12 位随机密码: $(generate_password 12)"
 # 调用 generate_password 函数生成 16 位随机密码
- echo "生成 16 位随机密码: $(generate_password 16)"
+echo "生成 16 位随机密码: $(generate_password 16)"
 echo
