@@ -51,13 +51,14 @@ is_prime() {
         return 1
     fi
     
-    # 检查从 3 到 sqrt(num) 的奇数
-    local max=$((num**0.5))
-    for (( i=3; i<=max; i+=2 )); do
-        if [ $((num % i)) -eq 0 ]; then
-            return 1  # 能被整除，不是质数
-        fi
-    done
+ # 检查从 3 到 sqrt(num) 的奇数
+# 使用 bc 命令计算平方根并取整
+local max=$(echo "sqrt($num)" | bc)
+for (( i=3; i<=max; i+=2 )); do
+    if [ $((num % i)) -eq 0 ]; then
+        return 1  # 能被整除，不是质数
+    fi
+done
     
     return 0  # 是质数
 }
@@ -121,10 +122,27 @@ echo
 # 测试练习 3: 查找 1-100 之间的质数
 echo "=== 测试练习 3: 1-100 之间的质数 ==="
 echo "1-100 之间的质数："
+
+# 使用数组存储已找到的质数，确保不会重复
+declare -a primes=()
+
 for (( i=1; i<=100; i++ )); do
     is_prime $i
     if [ $? -eq 0 ]; then
-        echo -n "$i "
+        # 检查质数是否已经在数组中
+        local found=0
+        for prime in "${primes[@]}"; do
+            if [ "$prime" -eq "$i" ]; then
+                found=1
+                break
+            fi
+        done
+        
+        # 如果质数不在数组中，则添加到数组并输出
+        if [ $found -eq 0 ]; then
+            primes+=("$i")
+            echo -n "$i "
+        fi
     fi
 done
 echo
