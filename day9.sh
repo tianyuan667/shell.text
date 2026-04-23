@@ -25,8 +25,9 @@ print_favorite_foods() {
 process_command_line_args() {
     echo "=== 练习 2: 处理命令行参数 ==="
     
-    # 将命令行参数存储在数组中
-    local args=($@)
+    # 提示用户输入参数
+    echo "请输入要处理的参数，用空格分隔:"
+    read -r -a args
     
     # 打印参数的数量
     echo "参数数量: ${#args[@]}"
@@ -45,8 +46,9 @@ process_command_line_args() {
 extract_unique_elements() {
     echo "=== 练习 3: 提取唯一元素 ==="
     
-    # 示例输入数组，包含重复元素
-    local input_array=('apple' 'banana' 'apple' 'orange' 'banana' 'grape')
+    # 提示用户输入数组元素
+    echo "请输入数组元素，用空格分隔:"
+    read -r -a input_array
     
     # 打印原始数组
     echo "原始数组: ${input_array[@]}"
@@ -74,9 +76,13 @@ extract_unique_elements() {
 process_file_lines() {
     echo "=== 练习 4: 读取文件到数组并处理 ==="
     
+    # 提示用户输入文件名
+    echo "请输入要处理的文件名:"
+    read -r filename
+    
     # 检查文件是否存在
-    if [ ! -f "$1" ]; then
-        echo "错误：文件 $1 不存在"
+    if [ ! -f "$filename" ]; then
+        echo "错误：文件 $filename 不存在"
         echo
         return 1
     fi
@@ -85,7 +91,7 @@ process_file_lines() {
     local lines=()
     while IFS= read -r line; do
         lines+=($line)
-    done < "$1"
+    done < "$filename"
     
     # 打印原始行
     echo "原始行:"
@@ -109,41 +115,88 @@ use_associative_array() {
     
     # 创建关联数组，存储国家和首都
     declare -A capitals
-    capitals["China"]="Beijing"
-    capitals["USA"]="Washington, D.C."
-    capitals["Japan"]="Tokyo"
-    capitals["France"]="Paris"
-    capitals["Germany"]="Berlin"
+    
+    # 提示用户输入几个国家和首都
+    echo "请输入 3 个国家及其首都，格式为 '国家:首都'，每行一个:"
+    for i in {1..3}; do
+        echo -n "请输入第 $i 个国家和首都: "
+        read -r entry
+        # 分割输入为国家和首都
+        local country=${entry%%:*}
+        local capital=${entry##*:}
+        capitals["$country"]="$capital"
+    done
     
     # 打印所有国家和首都
-    echo "国家及其首都:"
+    echo "\n国家及其首都:"
     for country in "${!capitals[@]}"; do
         echo "$country: ${capitals[$country]}"
     done
     
-    # 示例：根据国家名称检索首都
-    local country="China"
-    echo "\n$country 的首都是: ${capitals[$country]}"
+    # 提示用户输入要查询的国家
+    echo "\n请输入要查询首都的国家:"
+    read -r country
+    
+    # 检查国家是否存在
+    if [[ -n ${capitals[$country]} ]]; then
+        echo "$country 的首都是: ${capitals[$country]}"
+    else
+        echo "错误：未找到 $country 的首都信息"
+    fi
     
     echo
 }
 
+# 主菜单函数
+show_menu() {
+    echo "===== Day 9: Arrays 练习 ====="
+    echo "1. 练习 1: 创建食物数组并打印"
+    echo "2. 练习 2: 处理命令行参数"
+    echo "3. 练习 3: 提取唯一元素"
+    echo "4. 练习 4: 读取文件到数组并处理"
+    echo "5. 练习 5: 使用关联数组存储键值对"
+    echo "6. 退出"
+    echo "=============================="
+    echo -n "请选择一个选项 (1-6): "
+    read -r choice
+    return $choice
+}
+
 # 主脚本执行
+while true; do
+    show_menu
+    choice=$?
+    
+    case $choice in
+        1)
+            print_favorite_foods
+            ;;
+        2)
+            process_command_line_args
+            ;;
+        3)
+            extract_unique_elements
+            ;;
+        4)
+            process_file_lines
+            ;;
+        5)
+            use_associative_array
+            ;;
+        6)
+            echo "退出脚本"
+            break
+            ;;
+        *)
+            echo "无效选项，请重新选择"
+            ;;
+    esac
+    
+    echo "按 Enter 键继续..."
+    read -r
+    echo
 
-# 执行练习 1
-print_favorite_foods
-
-# 执行练习 2，传入一些示例参数
-process_command_line_args "apple" "banana" "cherry" "date"
-
-# 执行练习 3
-extract_unique_elements
-
-# 执行练习 4，使用 day9.sh 文件本身作为示例
-process_file_lines "day9.sh"
-
-# 执行练习 5
-use_associative_array
+done
 
 # 脚本结束
-echo "所有练习执行完成"
+echo "脚本执行完成"
