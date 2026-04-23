@@ -128,6 +128,10 @@ generate_secure_password() {
     
     # 打乱密码顺序
     password=$(echo "$password" | fold -w1 | shuf | tr -d '\n')
+    #| fold -w1 作用：将密码字符串转换为每行一个字符的形式
+    #| shuf 作用：随机打乱这些字符的顺序
+    #| tr -d '\n' 作用：将打乱后的字符重新组合
+
     
     # 输出结果
     echo "生成的安全密码: $password"
