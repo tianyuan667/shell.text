@@ -30,6 +30,7 @@ process_command_line_args() {
     read -r -a args
     
     # 打印参数的数量
+    #在数组变量前使用，用于获取数组的长度
     echo "参数数量: ${#args[@]}"
     
     # 打印每个参数的值
@@ -54,6 +55,7 @@ extract_unique_elements() {
     echo "原始数组: ${input_array[@]}"
     
     # 创建关联数组来存储唯一元素
+    #  声明一个关联数组，用于跟踪已见过的元素
     declare -A seen
     local unique_array=()
     
@@ -61,6 +63,7 @@ extract_unique_elements() {
     for item in "${input_array[@]}"; do
         if [[ -z ${seen[$item]} ]]; then
             seen[$item]=1
+            #+=($item)：向数组添加元素的语法，将 item 添加到数组末尾
             unique_array+=($item)
         fi
     done
@@ -102,6 +105,7 @@ process_file_lines() {
     # 处理每行（转换为大写）
     echo "处理后（大写）:"
     for line in "${lines[@]}"; do
+    #tr '[:lower:]' '[:upper:]' 命令将所有小写字母转换为大写字母
         echo "- $(echo $line | tr '[:lower:]' '[:upper:]')"
     done
     
