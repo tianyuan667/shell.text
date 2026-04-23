@@ -126,6 +126,8 @@ use_associative_array() {
         echo -n "请输入第 $i 个国家和首都: "
         read -r entry
         # 分割输入为国家和首都
+        #国家${entry%%:*}
+        #首都${entry##*:}
         local country=${entry%%:*}
         local capital=${entry##*:}
         capitals["$country"]="$capital"
