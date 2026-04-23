@@ -15,6 +15,7 @@ append_to_file() {
     
     # 读取用户输入并追加到文件中
     # 如果文件不存在，>> 操作符会自动创建文件
+    #cat 命令会将所有输入的内容一次性追加到指定文件中
     cat >> "$filename"
     
     # 输出操作结果
@@ -74,6 +75,8 @@ generate_html() {
     read -r html_file
     
     # 使用 here document 生成 HTML 内容并写入文件
+    #cat：读取标准输入并输出
+    #<< EOF：here document 的开始标记，表示从当前位置开始读取输入，直到遇到 EOF 标记为止
     cat << EOF > "$html_file"
 <!DOCTYPE html>
 <html>
